@@ -36,16 +36,15 @@ interface ParamTypes {
   id: string;
 }
 
-export const User: React.FC = () => {
+export const User: React.FC<Data> = () => {
   const classes = useStyles();
   const { id } = useParams<ParamTypes>();
   const { data, isLoading } = useUser(id);
-  const { mutateAsync } = useUpdateUser();
-  const [payload, setPayload] = useState(data);
+  const { mutate } = useUpdateUser();
   const [redirect, setRedirect] = useState<boolean>(false);
 
   const handleSubmit = async () => {
-    mutateAsync(payload);
+    mutate(data);
     setRedirect(true);
   };
 
@@ -55,7 +54,7 @@ export const User: React.FC = () => {
 
   const handleChange = (e: any) => {
     const key = e.target.id;
-    setPayload({ ...data, [key]: e.target.value });
+    data[key] = e.target.value;
   };
 
   if (isLoading) return <div>Loading...</div>;

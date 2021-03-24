@@ -13,11 +13,13 @@
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.3",
     "axios": "^0.21.1",
+    "concurrently": "^6.0.0",
     "formik": "^2.2.6",
     "material-ui": "^0.20.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-query": "^3.13.0",
+    "react-query-devtools": "^2.6.3",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
@@ -29,6 +31,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "json-server": "json-server --watch db.json --port 4000",
+    "dev": "concurrently \"npm start\" \"npm run json-server\"",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

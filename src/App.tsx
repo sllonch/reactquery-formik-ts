@@ -9,17 +9,15 @@ const queryClient = new QueryClient();
 
 function App() {
   return (
-    <div className="App">
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/users" component={Users} />
-            <Route exact path="/users/:id" component={User} />
-          </Switch>
-        </BrowserRouter>
-      </QueryClientProvider>
-    </div>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/users" component={Users} />
+              <Route exact path="/users/:id" component={User} />
+            </Switch>
+          </BrowserRouter>
+        </QueryClientProvider>
   );
 }
 

@@ -4,10 +4,18 @@ import { useQuery, useQueryClient, useMutation } from "react-query";
 const API_URL = "http://localhost:4000";
 
 export function useUsers() {
+  const queryClient = useQueryClient();
   //HOOK via useQuery
   return useQuery(
     "users",
-    () => axios.get(`${API_URL}/users`).then((res) => res.data)
+    () => axios.get(`${API_URL}/users`).then((res) => res.data),
+    {
+      onSuccess: (users) => {
+        users.forEach((user: any) => {
+          queryClient.setQueryData(["users", user.id], user);
+        })
+      },
+    }
   );
 }
 
@@ -22,7 +30,7 @@ export function useUser(id: string) {
         return queryClient
           .getQueryData<any>("users")
           ?.find((d: any) => d.id === parseInt(id));
-      },
+      }
     }
   );
 }
@@ -31,8 +39,8 @@ export function useCreateUser() {
   const queryClient = useQueryClient();
   //HOOK via useMutation
   return useMutation(
-    (values: object) =>
-      axios.post(`${API_URL}/users`, values).then((res) => res.data),
+    (user: object) =>
+      axios.post(`${API_URL}/users`, user).then((res) => res.data),
     {
       onSuccess: () => {
         queryClient.invalidateQueries("users");
@@ -76,7 +84,7 @@ export function useDeleteUser() {
   const queryClient = useQueryClient();
   //HOOK via useMutation
   return useMutation(
-    (id: string) =>
+    (id: number) =>
       axios.delete(`${API_URL}/users/${id}`).then((res) => res.data),
     {
       onSuccess: () => {
